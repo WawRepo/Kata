@@ -1,9 +1,21 @@
-
 import copy
 
+
 def sudoku_solver(board):
-    available_values_len_tab  = [[[available_values(i, j, board), len(available_values(i, j, board))]
-                             for j in range(0, 9)] for i in range(0, 9)]
+    if not validate_initial_board(board):
+        raise Exception('I know Python!')
+
+    solutions = []
+    solution = solver(board, solutions)
+    if solution:
+        return solution
+    else:
+        return False
+
+
+def solver(board, solutions):
+    available_values_len_tab = [[[available_values(i, j, board), len(available_values(i, j, board))]
+                                 for j in range(0, 9)] for i in range(0, 9)]
 
     min_len = 9
     x, y = None, None
@@ -16,41 +28,49 @@ def sudoku_solver(board):
             # game unsolvable
             elif available_values_len_tab[i][j][1] == 0 and board[i][j] == 0:
                 return False
-    #solution
+    # solution
     if x is None and y is None:
+        # print  len(solutions), solutions
+        solutions.append(board)
         return board
 
     next_board = copy.deepcopy(board)
+    # next_board = board
     solution = False
-    while not solution:
-        if len(available_values_len_tab[x][y][0]) == 0:
+    while len(available_values_len_tab[x][y][0]) > 0:
+        if len(solutions) > 1:
             return False
-        else:
-            next_board[x][y] = available_values_len_tab[x][y][0].pop()
-        solution = sudoku_solver(next_board)
-    return solution
+        next_board[x][y] = available_values_len_tab[x][y][0].pop()
+        solver(next_board, solutions)
+        #   next_board[x][y] = 0
+
+    if len(solutions) == 1:
+        return solutions[0]
+    else:
+        return False
+
 
 def validate_initial_board(board):
-    #check size
+    # check size
     if len(board) != 9:
         return False
     for i in range(0, 9):
         if len(board[i]) != 9:
             return False
+    # check values
+    if False in set(sum([[is_numeric_1_9_range(board[i][j]) for j in range(0, 9)] for i in range(0, 9)], [])):
+        return False
+    # check miltiplies on number in horizontal/vertical/square
+    if True in set(sum([[check_if_value_is_already_used(i, j, board) for j in range(0, 9)] for i in range(0, 9)], [])):
+        return False
 
-    if False in set(sum([[is_numeric_1_9_range(board[i][j]) for j in range(0, 9)] for i in range(0, 9)],[])):
-            return False
-
-    if True in set(sum([[check_if_value_is_already_used(i, j, board) for j in range(0, 9)] for i in range(0, 9)],[])):
-            return False
-    #get proper values
     return True
 
 
 def available_values(i, j, problem):
     return {j for j in range(1, 10)} - (
         get_horizontal_values(i, j, problem) | get_vertical_values(i, j, problem) | get_square_values(
-        i, j, problem))
+            i, j, problem))
 
 
 def get_square_values(i, j, problem):
@@ -68,15 +88,14 @@ def get_vertical_values(i, j, problem):
 
 
 def is_numeric_1_9_range(number):
-    if not unicode(str(number),'utf-8').isnumeric():
+    if not unicode(str(number), 'utf-8').isnumeric():
         return False
     if number < 0 or number > 9:
         return False
     return True
 
 
-def check_if_value_is_already_used(i, j ,board):
-
+def check_if_value_is_already_used(i, j, board):
     tmp, board[i][j] = board[i][j], 0
 
     if tmp == 0:
