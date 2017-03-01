@@ -5,6 +5,7 @@ def parse_molecule (formula):
 
     with_one = full_molecule_count(formula)
     splited  = re.split('(\d+)',with_one)
+    print splited
     is_letter = True
     i = 0
     dict = {}

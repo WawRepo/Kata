@@ -20,6 +20,9 @@ class TestParse_molecule(TestCase):
     def test_watter(self):
         self.assertTrue(self.equals_atomically(parse_molecule("H2O"), {'H': 2, 'O': 1}), "Should parse water")
 
+    def test_parse_deepest(self):
+        self.assertEquals(full_molecule_count("K4[ON(SO3)2]2"), "K4[O1N1(S1O3)2]2")
+
     def test_magnesium_hydroxide(self):
         self.assertTrue(self.equals_atomically(parse_molecule("Mg(OH)2"), {'Mg': 1, 'O': 2, 'H': 2}),
                 "Should parse magnesium hydroxide: Mg(OH)2")
