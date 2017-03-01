@@ -31,18 +31,18 @@ def solver(board, solutions):
     # solution
     if x is None and y is None:
         # print  len(solutions), solutions
-        solutions.append(board)
+        solutions.append(copy.deepcopy(board))
         return board
 
     next_board = copy.deepcopy(board)
-    # next_board = board
+    next_board = board
     solution = False
     while len(available_values_len_tab[x][y][0]) > 0:
         if len(solutions) > 1:
             return False
         next_board[x][y] = available_values_len_tab[x][y][0].pop()
         solver(next_board, solutions)
-        #   next_board[x][y] = 0
+        next_board[x][y] = 0
 
     if len(solutions) == 1:
         return solutions[0]
