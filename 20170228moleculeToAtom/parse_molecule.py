@@ -1,11 +1,9 @@
 #Molecule to atoms
 #https://www.codewars.com/kata/52f831fa9d332c6591000511/train/python
+import re
 def parse_molecule (formula):
-    import re
-
-    with_one = full_molecule_count(formula)
-    splited  = re.split('(\d+)',with_one)
-    print splited
+    with_one = reduce_parenhesis(full_molecule_count(formula))
+    splited = re.split('(\d+)',with_one)
     is_letter = True
     i = 0
     dict = {}
@@ -23,11 +21,31 @@ def parse_molecule (formula):
             else:
                 dict[splited[i]] = 1
             i += 1
-    print dict
     return dict
+
 
 
 def full_molecule_count(molecule):
     molecule_ = molecule + "_"
     return "".join([ c + '1' if c.isalpha() and not ( molecule_[i+1].isdigit() or molecule_[i+1].islower() ) else c
                      for i, c in enumerate(molecule)])
+
+def reduce_parenhesis(molecule):
+    brackets = identify_brackets(molecule)
+    if len(brackets) == 0:
+        return molecule
+    else:
+        return reduce_parenhesis(reduce_parenhesis_for_bracket(molecule, [brackets[-1]]))
+
+def identify_brackets(molecule):
+    start = [i for i, x in enumerate(molecule) if x == "(" or x == "["]
+    end = [i for i, x in enumerate(molecule) if x == ")" or x == "]"]
+    return zip(start,reversed(end))
+
+
+def reduce_parenhesis_for_bracket(molecule, bracket):
+    mul = molecule[bracket[0][1] + 1]
+    if mul.isdigit():
+        splited = re.split('(\d+)', molecule[bracket[0][0] + 1:bracket[0][1]])
+        multiply = [ str(int(x)*int(mul)) if x.isdigit() else x for x in splited]
+        return molecule[0:bracket[0][0]] + "".join( multiply) + molecule[bracket[0][1] + 2 :]

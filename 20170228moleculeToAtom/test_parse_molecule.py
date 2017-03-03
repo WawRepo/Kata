@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from parse_molecule import parse_molecule, full_molecule_count
+from parse_molecule import *
 
 class TestParse_molecule(TestCase):
     def equals_atomically(self, obj1, obj2):
@@ -12,16 +12,29 @@ class TestParse_molecule(TestCase):
         return True
 
     def test_add_one_to_molecule(self):
+        self.assertEquals(full_molecule_count("MgO2"), "Mg1O2")
         self.assertEquals(full_molecule_count("K4[ON(SO3)2]2"), "K4[O1N1(S1O3)2]2")
 
-    def test_add_one_to_molecule(self):
-        self.assertEquals(full_molecule_count("MgO2"), "Mg1O2")
 
     def test_watter(self):
         self.assertTrue(self.equals_atomically(parse_molecule("H2O"), {'H': 2, 'O': 1}), "Should parse water")
 
-    def test_parse_deepest(self):
-        self.assertEquals(full_molecule_count("K4[ON(SO3)2]2"), "K4[O1N1(S1O3)2]2")
+
+    def test_reduce_parenhesis(self):
+        self.assertEquals(reduce_parenhesis("(S1O3)2"), "S2O6")
+        self.assertEquals(reduce_parenhesis("K4[O1N1(S1O3)2]2"), "K4O2N2S4O12")
+
+
+    def test_identify_brackets(self):
+        self.assertEquals(identify_brackets("(S1O3)2"), [(0,5)])
+        self.assertEquals(identify_brackets("K4[O1N1(S1O3)2]2"), [(2,14),(7,12)])
+        self.assertEquals(identify_brackets("K4[O1N1S2O6]2"), [(2, 11)])
+
+
+    def test_reduce_parenhesis_for_bracket(self):
+        self.assertEquals(reduce_parenhesis_for_bracket("(S1O3)2",[(0,5)]), "S2O6")
+        self.assertEquals(reduce_parenhesis_for_bracket("K4[O1N1(S1O3)2]2", [(7, 12)]), "K4[O1N1S2O6]2")
+        self.assertEquals(reduce_parenhesis_for_bracket("K4[O1N1S2O6]2", [(2, 11)]), "K4O2N2S4O12")
 
     def test_magnesium_hydroxide(self):
         self.assertTrue(self.equals_atomically(parse_molecule("Mg(OH)2"), {'Mg': 1, 'O': 2, 'H': 2}),
