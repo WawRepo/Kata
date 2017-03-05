@@ -4,7 +4,6 @@ import re
 def parse_molecule (formula):
     with_one = reduce_parenhesis(full_molecule_count(formula))
     splited = re.split('(\d+)',with_one)
-    is_letter = True
     i = 0
     dict = {}
     while i < len(splited) - 1:
@@ -27,7 +26,10 @@ def parse_molecule (formula):
 
 def full_molecule_count(molecule):
     molecule_ = molecule + "_"
-    return "".join([ c + '1' if c.isalpha() and not ( molecule_[i+1].isdigit() or molecule_[i+1].islower() ) else c
+    return "".join([ c + '1'
+                     if (c.isalpha() and not ( molecule_[i+1].isdigit() or molecule_[i+1].islower() ) )
+                     or ( (c == ")" or c == "]" or c == "}" ) and not  molecule_[i+1].isdigit() )
+                     else c
                      for i, c in enumerate(molecule)])
 
 def reduce_parenhesis(molecule):
@@ -35,12 +37,22 @@ def reduce_parenhesis(molecule):
     if len(brackets) == 0:
         return molecule
     else:
-        return reduce_parenhesis(reduce_parenhesis_for_bracket(molecule, [brackets[-1]]))
+        return reduce_parenhesis(reduce_parenhesis_for_bracket(molecule, [brackets[0]]))
 
 def identify_brackets(molecule):
-    start = [i for i, x in enumerate(molecule) if x == "(" or x == "["]
-    end = [i for i, x in enumerate(molecule) if x == ")" or x == "]"]
-    return zip(start,reversed(end))
+    import math
+    start = [i+.1 for i, x in enumerate(molecule) if x == "(" or x == "[" or x == "{"]
+    end = [i+.2 for i, x in enumerate(molecule) if x == ")" or x == "]" or x == "}"]
+    brackets = sorted(start + end)
+    result = []
+    while len(brackets) > 0 :
+        for i, x in enumerate(brackets):
+            if abs(math.modf(brackets[i] + brackets[i+1])[0] - .3) < .000001:
+                result.append((int(brackets[i]) , int(brackets[i+1])))
+                del brackets[i + 1]
+                del brackets[i]
+                break
+    return result
 
 
 def reduce_parenhesis_for_bracket(molecule, bracket):
