@@ -30,3 +30,6 @@ class TestSolve(TestCase):
         self.assertEqual(solve_scrapers(self.clues[0]), self.outcomes[0])
         self.assertEqual(solve_scrapers(self.clues[1]), self.outcomes[1])
 
+
+    def test_visible_count(self):
+        self.assertEqual(visible_count((1, 3, 4, 2)), 3)
