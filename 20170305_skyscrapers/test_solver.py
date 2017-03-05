@@ -33,3 +33,4 @@ class TestSolve(TestCase):
 
     def test_visible_count(self):
         self.assertEqual(visible_count((1, 3, 4, 2)), 3)
+        self.assertEqual(visible_count((2, 4, 3, 1)), 2)
