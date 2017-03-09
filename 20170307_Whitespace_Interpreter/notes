@@ -1,0 +1,21 @@
+ssstntnstnnn
+
+
+s sstntnstnnn
+[space]: Stack Manipulation
+
+s sstn tnstnnn
+Numbers begin with a [sign] symbol. The sign symbol is either [tab] -> negative, or [space] -> positive.
+Between the sign symbol and the terminal symbol are binary digits [space] -> binary-0, or [tab] -> binary-1.
++01
+
+
+s sstn tn stnnn
+[tab][line-feed]: Input/Output
+
+s sstn tn st nnn
+[space][tab]: Pop a value off the stack and output it as a number.
+
+s sstn tn st n nn
+[line-feed]: Flow Control
+[line-feed][line-feed]: Exit the program.
