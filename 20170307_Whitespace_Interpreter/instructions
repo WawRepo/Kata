@@ -81,6 +81,7 @@ IMP [tab][tab] - Heap Access
 
 [space]: Pop a and b, then store a at heap address b.
 [tab]: Pop a and then push the value at heap address a onto the stack.
+
 IMP [tab][line-feed] - Input/Output
 
 [space][space]: Pop a value off the stack and output it as a character.

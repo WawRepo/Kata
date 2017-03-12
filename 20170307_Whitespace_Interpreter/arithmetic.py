@@ -24,6 +24,17 @@ def arithmetic_multiply(code_reader, stack):
         stack.append(stack.pop() * stack.pop())
 
 
+def arithmetic_divide(code_reader, stack):
+    if len(stack) > 1:
+        a, b = stack.pop(), stack.pop()
+        stack.append(b / a)
+
+def arithmetic_modulo(code_reader, stack):
+    if len(stack) > 1:
+        a, b = stack.pop(), stack.pop()
+        stack.append(b % a)
+
+
 def arithmetic(code_reader, stack):
     control_value = code_reader.next()
     if not aritmetic_dict.has_key(control_value):
@@ -35,5 +46,6 @@ aritmetic_dict = {
     'ss': arithmetic_add
     ,'st': arithmetic_substract
     ,'sn': arithmetic_multiply
-
+    ,'ts': arithmetic_divide
+    ,'tt': arithmetic_modulo
 }

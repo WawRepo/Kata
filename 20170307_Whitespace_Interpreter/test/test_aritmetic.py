@@ -16,7 +16,32 @@ class TestAritmetic(TestCase):
         self.assertEquals(stack, expected_stack)
 
 
+    def test_arithmetic_divide(self):
+        code = 'ss'
+        stack = [6, 3]
+        expected_stack = [2]
+        arithmetic_divide(code, stack)
+        self.assertEquals(stack, expected_stack)
+
+        stack = [6, 0]
+        expected_stack = []
+        self.assertRaises(ZeroDivisionError, lambda: arithmetic_divide(code, stack))
+        self.assertEquals(stack, expected_stack)
+
+    def test_arithmetic_modulo(self):
+        code = 'ss'
+        stack = [4, 3]
+        expected_stack = [1]
+        arithmetic_divide(code, stack)
+        self.assertEquals(stack, expected_stack)
+
+        stack = [4, 0]
+        expected_stack = []
+        self.assertRaises(ZeroDivisionError, lambda: arithmetic_divide(code, stack))
+        self.assertEquals(stack, expected_stack)
+
     def test_aritmetic(self):
+        #sum
         code = 'ssnss'
         code_rdr = code_reader(code)
         stack = [1, 2]
@@ -24,6 +49,7 @@ class TestAritmetic(TestCase):
         arithmetic(code_rdr, stack)
         self.assertEquals(stack, expected_stack)
 
+        #difference
         code = 'stnss'
         code_rdr = code_reader(code)
         stack = [1, 2]
@@ -31,9 +57,26 @@ class TestAritmetic(TestCase):
         arithmetic(code_rdr, stack)
         self.assertEquals(stack, expected_stack)
 
+        #multiply
         code = 'snnss'
         code_rdr = code_reader(code)
-        stack = [2, 2]
-        expected_stack = [4]
+        stack = [2, 3]
+        expected_stack = [6]
+        arithmetic(code_rdr, stack)
+        self.assertEquals(stack, expected_stack)
+
+        #divide
+        code = 'tsnss'
+        code_rdr = code_reader(code)
+        stack = [6, 3]
+        expected_stack = [2]
+        arithmetic(code_rdr, stack)
+        self.assertEquals(stack, expected_stack)
+
+        #modulo
+        code = 'ttnss'
+        code_rdr = code_reader(code)
+        stack = [6, 3]
+        expected_stack = [0]
         arithmetic(code_rdr, stack)
         self.assertEquals(stack, expected_stack)
