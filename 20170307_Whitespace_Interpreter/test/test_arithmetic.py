@@ -40,13 +40,13 @@ class TestAritmetic(TestCase):
         self.assertRaises(ZeroDivisionError, lambda: arithmetic_divide(code, stack))
         self.assertEquals(stack, expected_stack)
 
-    def test_aritmetic(self):
+    def test_arithmetic_flow(self):
         #sum
         code = 'ssnss'
         code_rdr = code_reader(code)
         stack = [1, 2]
         expected_stack = [3]
-        arithmetic(code_rdr, stack)
+        arithmetic_flow(code_rdr, stack)
         self.assertEquals(stack, expected_stack)
 
         #difference
@@ -54,7 +54,7 @@ class TestAritmetic(TestCase):
         code_rdr = code_reader(code)
         stack = [1, 2]
         expected_stack = [-1]
-        arithmetic(code_rdr, stack)
+        arithmetic_flow(code_rdr, stack)
         self.assertEquals(stack, expected_stack)
 
         #multiply
@@ -62,7 +62,7 @@ class TestAritmetic(TestCase):
         code_rdr = code_reader(code)
         stack = [2, 3]
         expected_stack = [6]
-        arithmetic(code_rdr, stack)
+        arithmetic_flow(code_rdr, stack)
         self.assertEquals(stack, expected_stack)
 
         #divide
@@ -70,7 +70,7 @@ class TestAritmetic(TestCase):
         code_rdr = code_reader(code)
         stack = [6, 3]
         expected_stack = [2]
-        arithmetic(code_rdr, stack)
+        arithmetic_flow(code_rdr, stack)
         self.assertEquals(stack, expected_stack)
 
         #modulo
@@ -78,5 +78,5 @@ class TestAritmetic(TestCase):
         code_rdr = code_reader(code)
         stack = [6, 3]
         expected_stack = [0]
-        arithmetic(code_rdr, stack)
+        arithmetic_flow(code_rdr, stack)
         self.assertEquals(stack, expected_stack)

@@ -88,6 +88,8 @@ IMP [tab][line-feed] - Input/Output
 [space][tab]: Pop a value off the stack and output it as a number.
 [tab][space]: Read a character from input, a, Pop a value off the stack, b, then store the ASCII value of a at heap address b.
 [tab][tab]: Read a number from input, a, Pop a value off the stack, b, then store a at heap address b.
+
+
 IMP [line-feed] - Flow Control
 
 [space][space] (label): Mark a location in the program with label n.

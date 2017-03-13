@@ -35,7 +35,7 @@ def arithmetic_modulo(code_reader, stack):
         stack.append(b % a)
 
 
-def arithmetic(code_reader, stack):
+def arithmetic_flow(code_reader, stack):
     control_value = code_reader.next()
     if not aritmetic_dict.has_key(control_value):
         control_value += code_reader.next()

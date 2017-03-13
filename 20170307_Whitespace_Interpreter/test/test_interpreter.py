@@ -3,16 +3,16 @@ from interpreter import *
 
 
 class TestInterpreter(TestCase):
-    # def test_output_0_3(self):
-    #     """ Testing push, output of numbers 0 through 3 """
-    #     output1 = "   \t\n\t\n \t\n\n\n"
-    #     output2 = "   \t \n\t\n \t\n\n\n"
-    #     output3 = "   \t\t\n\t\n \t\n\n\n"
-    #     output0 = "    \n\t\n \t\n\n\n"
-    #     self.assertEquals(whitespace(output1), "1")
-    #     self.assertEquals(whitespace(output2), "2")
-    #     self.assertEquals(whitespace(output3), "3")
-    #     self.assertEquals(whitespace(output0), "0")
+    def test_output_0_3(self):
+        """ Testing push, output of numbers 0 through 3 """
+        output1 = "   \t\n\t\n \t\n\n\n"
+        output2 = "   \t \n\t\n \t\n\n\n"
+        output3 = "   \t\t\n\t\n \t\n\n\n"
+        output0 = "    \n\t\n \t\n\n\n"
+        self.assertEquals(whitespace(output1), "1")
+        self.assertEquals(whitespace(output2), "2")
+        self.assertEquals(whitespace(output3), "3")
+        self.assertEquals(whitespace(output0), "0")
     #
     #
     # def test_output_negative_1_3(self):

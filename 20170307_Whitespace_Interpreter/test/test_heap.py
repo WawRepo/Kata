@@ -1,19 +1,48 @@
 from unittest import TestCase
 from heap import *
 
-class TestAritmetic(TestCase):
+class TestHeap(TestCase):
     def test_stack_to_heap(self):
-        stack_to_heap()
-
-    # def test_heap_to_stack(self):
-    #     heap_to_stack()
-
-    def test_aritmetic(self):
-        #sum
-        code = 'ssnss'
-        code_rdr = code_reader(code)
         stack = [1, 2]
-        expected_stack = [3]
-        arithmetic(code_rdr, stack)
+        heap = {}
+        expected_heap = {2: 1}
+        expected_stack  = []
+        stack_to_heap("dummy code" , stack, heap)
+        self.assertEquals(heap, expected_heap)
         self.assertEquals(stack, expected_stack)
 
+        stack_to_heap("dummy code", stack, heap)
+        self.assertEquals(heap, expected_heap)
+        self.assertEquals(stack, expected_stack)
+
+    def test_heap_to_stack(self):
+        stack = [2]
+        heap = {2: 1}
+        expected_stack = [1]
+        expected_heap = {2: 1}
+
+        heap_to_stack("dummy code" , stack, heap)
+        self.assertEquals(heap, expected_heap)
+        self.assertEquals(stack, expected_stack)
+
+
+    def test_heap_flow(self):
+        #stack to heap
+        code = 'snss'
+        code_rdr = code_reader(code)
+        stack = [1, 2]
+        heap = {}
+        expected_heap = {2: 1}
+        heap_flow(code_rdr, stack, heap)
+        self.assertEquals(heap, expected_heap)
+
+        # heap to stack
+        code = 'tnss'
+        code_rdr = code_reader(code)
+        stack = [2]
+        heap = {2: 1}
+        expected_stack = [1]
+        expected_heap = {2: 1}
+        heap_flow(code_rdr, stack, heap)
+        self.assertEquals(heap, expected_heap)
+        self.assertEquals(stack, expected_stack)

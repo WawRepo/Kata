@@ -1,4 +1,4 @@
-from interpreter import *
+from code_reader import *
 
 # IMP [space] - Stack Manipulation
 #
@@ -10,7 +10,7 @@ from interpreter import *
 # [line-feed][line-feed]: Discard the top value on the stack.
 
 
-def stack_manipulation(code_reader, stack):
+def stack_flow(code_reader, stack, heap = {}, inp = [], output = []):
     control_value = code_reader.next()
     if not stack_dict.has_key(control_value):
         control_value += code_reader.next()
