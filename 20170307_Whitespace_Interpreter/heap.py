@@ -1,4 +1,4 @@
-from interpreter import *
+from code_reader import *
 
 # IMP [tab][tab] - Heap Access
 #

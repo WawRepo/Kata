@@ -1,7 +1,8 @@
 def code_reader(code):
     """Code char generator"""
     for c in code:
-        yield c
+        if c == 't' or c == 'n' or c =='s':
+            yield c
 
 # def code_reader(code):
 #     length = len(code)

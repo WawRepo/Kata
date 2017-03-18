@@ -1,4 +1,4 @@
-from interpreter import *
+from code_reader import *
 
 # IMP [tab][space] - Arithmetic
 # [space][space]: Pop a and b, then push b+a.

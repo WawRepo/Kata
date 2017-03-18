@@ -1,4 +1,4 @@
-from interpreter import *
+from code_reader import *
 # IMP [tab][line-feed] - Input/Output
 #
 # [space][space]: Pop a value off the stack and output it as a character.

@@ -3,18 +3,19 @@ from stack import *
 from arithmetic import *
 from heap import *
 from input_output import *
+from flow_control import *
 
 imp_dict = {
     's': stack_flow #"Stack Manipulation"
     , 'ts': arithmetic_flow #"Arithmetic"
     , 'tt': heap_flow #"Heap Access"
     , 'tn': input_output_flow #"Input/Output"
-    , 'n': "Flow Control"
+    , 'n': flow_control_flow #Flow Control
 }
 
 def main_flow(code_reader, stack, heap = {}, inp = [], output = []):
     control_value = code_reader.next()
-    if not stack_dict.has_key(control_value):
+    if not imp_dict.has_key(control_value):
         control_value += code_reader.next()
     (imp_dict[control_value])(code_reader, stack, heap, inp, output)
 
@@ -22,7 +23,8 @@ def main_flow(code_reader, stack, heap = {}, inp = [], output = []):
 def whitespace(code, inp=''):
     """  https://www.codewars.com/kata/whitespace-interpreter/train/python """
     code_validation(code)
-    code_rdr = code_reader(unbleach(code))
+    comment_removed = comment_remover(code)
+    code_rdr = code_reader(unbleach(comment_removed))
 
     inp = list (inp)
 
@@ -30,10 +32,13 @@ def whitespace(code, inp=''):
     stack = []
     heap = {}
 
-    while code_rdr:
-        main_flow(code_rdr, stack, heap, inp, output)
+    try:
+        while code_rdr:
+            main_flow(code_rdr, stack, heap, inp, output)
+    except StopIteration:
+        pass
 
-    return "".join(output)
+    return "".join([str(c) for c in output])
 
 
 # to help with debugging
@@ -43,3 +48,10 @@ def unbleach(n):
 def code_validation(code):
     if code is None or code == '':
         raise ValueError('Code not admisible')
+
+def comment_remover(code):
+    code_cleaned = ""
+    for i in range(0, len(code)):
+        if  code[i] in ['\t', '\n', ' '] :
+            code_cleaned += code[i]
+    return code_cleaned
