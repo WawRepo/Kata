@@ -44,6 +44,6 @@ class TestInterpreter(TestCase):
         self.assertEqual(comment_removed, comment_remover(code))
 
     def test_from_CW(self):
-        code ="   \t\n   \t \n   \t\t\n \t  \t \n\t\n \t"
+        code ="   \t\n   \t \n   \t\t\n \t  \t\t\n\t\n \t\n\n\n"
 
         print whitespace(code)

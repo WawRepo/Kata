@@ -16,7 +16,7 @@ def arithmetic_add(code_reader, stack):
 
 def arithmetic_substract(code_reader, stack):
     if len(stack) > 1:
-        stack.append(- stack.pop() + stack.pop())
+        stack.append( - stack.pop() + stack.pop())
 
 
 def arithmetic_multiply(code_reader, stack):
