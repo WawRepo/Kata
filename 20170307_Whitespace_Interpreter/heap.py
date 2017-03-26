@@ -22,7 +22,7 @@ heap_dict = {
 
 }
 
-def heap_flow(code_reader, stack, heap):
+def heap_flow(code_reader, stack, heap, inp = [], output = []):
     control_value = code_reader.next()
     if not heap_dict.has_key(control_value):
         control_value += code_reader.next()

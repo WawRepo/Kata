@@ -20,38 +20,45 @@ class TestStack(TestCase):
         code = 'stn'  # 1
         code_rdr = code_reader(code)
         stack_manipulation_duplicate_nth(code_rdr, stack)
-        self.assertEqual(stack, [1, 2, 3, 3, 4])
+        self.assertEqual(stack, [1, 2, 3, 4, 3])
 
         stack = [1, 2, 3, 4]
         code = 'sttn'  # 3
         code_rdr = code_reader(code)
         stack_manipulation_duplicate_nth(code_rdr, stack)
-        self.assertEqual(stack, [1, 1, 2, 3, 4])
+        self.assertEqual(stack, [1, 2, 3, 4, 1])
 
         # should do nothing
+        stack = [1, 2, 3, 4]
         code = 'ttn'  # -1
         code_rdr = code_reader(code)
         stack_manipulation_duplicate_nth(code_rdr, stack)
-        self.assertEqual(stack, [1, 1, 2, 3, 4])
+        self.assertEqual(stack, [1, 2, 3, 4])
 
         # should do nothing
         code = 'stsssn'  # 8
         code_rdr = code_reader(code)
         stack_manipulation_duplicate_nth(code_rdr, stack)
-        self.assertEqual(stack, [1, 1, 2, 3, 4])
+        self.assertEqual(stack, [1, 2, 3, 4])
 
     def test_stack_manipulation_discard_n(self):
         stack = [1, 2, 3, 4]
         code = 'ssn'  # 0
         code_rdr = code_reader(code)
         stack_manipulation_discard_n(code_rdr, stack)
-        self.assertEqual(stack, [1, 2, 4])
+        self.assertEqual(stack, [1, 2, 3, 4])
 
         stack = [1, 2, 3, 4]
         code = 'stn'  #1
         code_rdr = code_reader(code)
         stack_manipulation_discard_n(code_rdr, stack)
-        self.assertEqual(stack, [1, 4])
+        self.assertEqual(stack, [1, 2, 4])
+
+        stack = [3, 2, 1, 4, 6, 7, 5]
+        code = 'sttn'  #3
+        code_rdr = code_reader(code)
+        stack_manipulation_discard_n(code_rdr, stack)
+        self.assertEqual(stack, [3, 2, 1, 5])
 
         stack = [1, 2, 3, 4]
         code = 'ttn'  #-1
@@ -97,7 +104,7 @@ class TestStack(TestCase):
         stack = []
         code = 'stsssn'  # 8
         code_rdr = code_reader(code)
-        stack_manipulation_discard_top(code_rdr, stack)
+        self.assertRaises(ValueError, lambda: stack_manipulation_discard_top(code_rdr, stack))
         self.assertEqual(stack, [])
 
     def test_stack_flow(self):
@@ -111,14 +118,14 @@ class TestStack(TestCase):
         code = 'tssttn'
         code_rdr = code_reader(code)
         stack = [1, 2, 3, 4]
-        expected_stack = [1, 1, 2, 3, 4]
+        expected_stack = [1, 2, 3, 4, 1]
         stack_flow(code_rdr, stack)
         self.assertEquals(stack, expected_stack)
 
         code = 'tnstn'
         code_rdr = code_reader(code)
         stack = [1, 2, 3, 4]
-        expected_stack = [1, 4]
+        expected_stack = [1, 2, 4]
         stack_flow(code_rdr, stack)
         self.assertEquals(stack, expected_stack)
 

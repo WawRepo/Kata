@@ -26,15 +26,15 @@ def stack_manipulation_duplicate_nth(code_reader, stack):
     item_to_duplicate = len(stack) - 1 - parse_number(read_until_terminal(code_reader))
     if item_to_duplicate < 0 or item_to_duplicate >= len(stack):
         return
-    stack[:] = stack[:item_to_duplicate] + [stack[item_to_duplicate]] + stack[item_to_duplicate:]
+    stack.append(stack[item_to_duplicate])
 
 
 def stack_manipulation_discard_n(code_reader, stack):
-    items_to_discard = len(stack) - 2 - parse_number(read_until_terminal(code_reader))
+    items_to_discard = parse_number(read_until_terminal(code_reader))
     if items_to_discard < 0 or items_to_discard >= len(stack) - 1:
         stack[:] = [stack[-1]]
     else:
-        stack[:] = stack[:items_to_discard] + [stack[-1]]
+        stack[:] = stack[:len(stack) - 1 - items_to_discard] + [stack[-1]]
 
 
 def stack_manipulation_duplicate_top(code_reader, stack):
@@ -49,6 +49,8 @@ def stack_manipulation_swap(code_reader, stack):
 def stack_manipulation_discard_top(code_reader, stack):
     if len(stack) > 0:
         stack.pop()
+    else:
+        raise ValueError('Discard from empty stack')
 
 
 stack_dict = {

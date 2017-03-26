@@ -33,5 +33,7 @@ def read_until_terminal(code_reader):
 def parse_number(number_wi_syntax):
     if number_wi_syntax == '':
         raise ValueError('Empty string not allowed')
+    if len(number_wi_syntax) == 1:
+        return 0
     factor = 1 if number_wi_syntax[0] == 's' else -1
     return factor * int("".join([ '1' if c == 't' else '0' for c in number_wi_syntax[1:]]), 2)

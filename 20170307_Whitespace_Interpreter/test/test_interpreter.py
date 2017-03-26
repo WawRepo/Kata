@@ -43,7 +43,13 @@ class TestInterpreter(TestCase):
         comment_removed = ' \t\n\t \n'
         self.assertEqual(comment_removed, comment_remover(code))
 
+
+    def test_from_CW_empty_stack_exeption(self):
+        code =" \n\n"
+        self.assertRaises(Exception, lambda: whitespace(code))
+
+
     def test_from_CW(self):
-        code ="   \t\n   \t \n   \t\t\n \t  \t\t\n\t\n \t\n\n\n"
+        code = "   \t\n   \t \n   \t\t\n \t  \t\t\n\t\n \t\n\n\n"
 
         print whitespace(code)
