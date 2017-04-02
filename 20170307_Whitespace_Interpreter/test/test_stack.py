@@ -28,18 +28,17 @@ class TestStack(TestCase):
         stack_manipulation_duplicate_nth(code_rdr, stack)
         self.assertEqual(stack, [1, 2, 3, 4, 1])
 
-        # should do nothing
+        #IndexError exeption
         stack = [1, 2, 3, 4]
         code = 'ttn'  # -1
         code_rdr = code_reader(code)
-        stack_manipulation_duplicate_nth(code_rdr, stack)
-        self.assertEqual(stack, [1, 2, 3, 4])
+        self.assertRaises(IndexError, lambda: stack_manipulation_duplicate_nth(code_rdr, stack))
 
-        # should do nothing
+        #IndexError exeption
         code = 'stsssn'  # 8
         code_rdr = code_reader(code)
-        stack_manipulation_duplicate_nth(code_rdr, stack)
-        self.assertEqual(stack, [1, 2, 3, 4])
+        self.assertRaises(IndexError, lambda: stack_manipulation_duplicate_nth(code_rdr, stack))
+
 
     def test_stack_manipulation_discard_n(self):
         stack = [1, 2, 3, 4]

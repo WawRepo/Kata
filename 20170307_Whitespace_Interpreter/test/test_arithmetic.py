@@ -11,9 +11,7 @@ class TestAritmetic(TestCase):
 
         code = 'ss'
         stack = [1]
-        expected_stack = [1]
-        arithmetic_add(code, stack)
-        self.assertEquals(stack, expected_stack)
+        self.assertRaises(IndexError, lambda: arithmetic_add(code, stack))
 
 
     def test_arithmetic_divide(self):
@@ -28,17 +26,25 @@ class TestAritmetic(TestCase):
         self.assertRaises(ZeroDivisionError, lambda: arithmetic_divide(code, stack))
         self.assertEquals(stack, expected_stack)
 
+        code = 'ss'
+        stack = [1]
+        self.assertRaises(IndexError, lambda: arithmetic_divide(code, stack))
+
     def test_arithmetic_modulo(self):
         code = 'ss'
         stack = [4, 3]
         expected_stack = [1]
-        arithmetic_divide(code, stack)
+        arithmetic_modulo(code, stack)
         self.assertEquals(stack, expected_stack)
 
         stack = [4, 0]
         expected_stack = []
-        self.assertRaises(ZeroDivisionError, lambda: arithmetic_divide(code, stack))
+        self.assertRaises(ZeroDivisionError, lambda: arithmetic_modulo(code, stack))
         self.assertEquals(stack, expected_stack)
+
+        code = 'ss'
+        stack = [1]
+        self.assertRaises(IndexError, lambda: arithmetic_modulo(code, stack))
 
     def test_arithmetic_flow(self):
         #sum

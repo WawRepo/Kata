@@ -25,7 +25,7 @@ def stack_manipulation_push(code_reader, stack):
 def stack_manipulation_duplicate_nth(code_reader, stack):
     item_to_duplicate = len(stack) - 1 - parse_number(read_until_terminal(code_reader))
     if item_to_duplicate < 0 or item_to_duplicate >= len(stack):
-        return
+        raise IndexError("Out bound index")
     stack.append(stack[item_to_duplicate])
 
 

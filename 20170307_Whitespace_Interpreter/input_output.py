@@ -8,26 +8,28 @@ from code_reader import *
 
 
 def stack_output_char(code_reader, stack, heap, input, output):
-    if len(stack) > 0:
-        to_convert = stack.pop()
-        output.append(str(unichr(to_convert)))
+    # if len(stack) > 0:
+    to_convert = stack.pop()
+    output.append(str(unichr(to_convert)))
 
 def stack_output_int(code_reader, stack, heap, input, output):
-    if len(stack) > 0:
-        to_add = stack.pop()
-        output.append(to_add)
+    #if len(stack) > 0:
+    to_add = stack.pop()
+    output.append(to_add)
 
 def input_char_heap(code_reader, stack, heap, inp, output):
-    if len(inp) > 0:
-        value =  inp.pop(0)
-        key = stack.pop()
-        heap[key] = str(unichr(value))
+    # if len(inp) > 0:
+    value = ord(inp[0][0])
+    key = stack.pop()
+    heap[key] = value
+    inp[0] = inp[0][1:]
+
 
 def input_int_heap(code_reader, stack, heap, inp, output):
-    if len(inp) > 0:
-        value =  inp.pop(0)
-        key = stack.pop()
-        heap[key] = value
+    #if len(inp) > 0:
+    value =  inp.pop(0)
+    key = stack.pop()
+    heap[key] = value
 
 input_output_dict = {
     'ss': stack_output_char

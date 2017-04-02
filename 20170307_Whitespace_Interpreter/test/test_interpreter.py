@@ -49,7 +49,10 @@ class TestInterpreter(TestCase):
         self.assertRaises(Exception, lambda: whitespace(code))
 
 
-    def test_from_CW(self):
+    def test_from_CW_out_of_bound_index_during_nth_duplication(self):
         code = "   \t\n   \t \n   \t\t\n \t  \t\t\n\t\n \t\n\n\n"
+        self.assertRaises(IndexError, lambda: whitespace(code))
 
-        print whitespace(code)
+    def test_from_CW_(self):
+        code = "   \t\n\t\n\t    \t \n\t\n\t    \t\t\n\t\n\t    \t  \n\t\n\t    \t \t\n\t\n\t    \t \t\n\t\t\t   \t  \n\t\t\t   \t\t\n\t\t\t   \t \n\t\t\t   \t\n\t\t\t\t\n  \t\n  \t\n  \t\n  \t\n  \n\n\n"
+        self.assertRaises(IndexError, lambda: whitespace(code,inp='12345'))

@@ -26,7 +26,7 @@ def whitespace(code, inp=''):
     comment_removed = comment_remover(code)
     code_rdr = code_reader(unbleach(comment_removed))
 
-    inp = list (inp)
+    inp = inp.split("\n")
 
     output = []
     stack = []

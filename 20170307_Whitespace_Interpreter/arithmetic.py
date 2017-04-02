@@ -9,33 +9,34 @@ from code_reader import *
 # [tab][tab]: Pop a and b, then push b%a*. If a is zero, throw an error.
 # *Note that the result is defined as the remainder after division and sign (+/-) of the divisor (a).
 
+
 def arithmetic_add(code_reader, stack):
-    if len(stack) > 1:
-        stack.append(stack.pop() + stack.pop())
+    #if len(stack) > 1:
+    stack.append(stack.pop() + stack.pop())
 
 
 def arithmetic_substract(code_reader, stack):
-    if len(stack) > 1:
-        stack.append( - stack.pop() + stack.pop())
+    #if len(stack) > 1:
+    stack.append( - stack.pop() + stack.pop())
 
 
 def arithmetic_multiply(code_reader, stack):
-    if len(stack) > 1:
-        stack.append(stack.pop() * stack.pop())
+    #if len(stack) > 1:
+    stack.append(stack.pop() * stack.pop())
 
 
 def arithmetic_divide(code_reader, stack):
-    if len(stack) > 1:
-        a, b = stack.pop(), stack.pop()
-        stack.append(b / a)
+    #if len(stack) > 1:
+    a, b = stack.pop(), stack.pop()
+    stack.append(b / a)
 
 def arithmetic_modulo(code_reader, stack):
-    if len(stack) > 1:
-        a, b = stack.pop(), stack.pop()
-        stack.append(b % a)
+    #if len(stack) > 1:
+    a, b = stack.pop(), stack.pop()
+    stack.append(b % a)
 
 
-def arithmetic_flow(code_reader, stack):
+def arithmetic_flow(code_reader, stack, heap=[], inp=[], output=[]):
     control_value = code_reader.next()
     if not aritmetic_dict.has_key(control_value):
         control_value += code_reader.next()
