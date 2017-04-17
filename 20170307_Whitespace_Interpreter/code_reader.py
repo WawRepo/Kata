@@ -1,26 +1,41 @@
-def code_reader(code):
-    """Code char generator"""
-    for c in code:
-        if c == 't' or c == 'n' or c =='s':
-            yield c
-
 # def code_reader(code):
-#     length = len(code)
-#     i = 0
-#     while i < length:
-#         val = (yield i)
-#         if val != 'position':
-#             yield code[i]
-#             i += 1
-# a = code_reader("foobar")
-#
-# print a.next()
-# print a.send('position')
-# print a.next()
-# print a.send('position')
-# print a.send('position')
-# print a.next()
-# print a.send('position')
+#     """Code char generator"""
+#     for c in code:
+#         if c == 't' or c == 'n' or c =='s':
+#             yield c
+
+
+
+class code_reader:
+    """
+    CodeReader class will provide 3 main functions:
+    next() works as generator defined on string 
+    position() gives a position of char that next() is going to return
+    move(i) move cursor to position i
+    """
+
+    def __init__(self, code):
+        self._code = code
+        self._position = 0
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        pos = self._position
+        if pos >= len(self._code):
+            raise StopIteration
+        self._position += 1
+        return self._code[pos]
+
+    def position(self):
+        return self._position
+
+    def move(self, i):
+        if i < 0 or i >= len(self._code) :
+            raise IndexError("Index out of bounds")
+        self._position = i
+
 
 def read_until_terminal(code_reader):
     output_str = ''

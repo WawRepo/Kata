@@ -7,17 +7,17 @@ from code_reader import *
 # [tab][tab]: Read a number from input, a, Pop a value off the stack, b, then store a at heap address b.
 
 
-def stack_output_char(code_reader, stack, heap, input, output):
+def stack_output_char(code_reader, stack, heap, input, output, labels = {}, return_address= []):
     # if len(stack) > 0:
     to_convert = stack.pop()
     output.append(str(unichr(to_convert)))
 
-def stack_output_int(code_reader, stack, heap, input, output):
+def stack_output_int(code_reader, stack, heap, input, output, labels = {}, return_address= []):
     #if len(stack) > 0:
     to_add = stack.pop()
     output.append(to_add)
 
-def input_char_heap(code_reader, stack, heap, inp, output):
+def input_char_heap(code_reader, stack, heap, inp, output, labels = {}, return_address= []):
     # if len(inp) > 0:
     value = ord(inp[0][0])
     key = stack.pop()
@@ -25,11 +25,12 @@ def input_char_heap(code_reader, stack, heap, inp, output):
     inp[0] = inp[0][1:]
 
 
-def input_int_heap(code_reader, stack, heap, inp, output):
+def input_int_heap(code_reader, stack, heap, inp, output, labels = {}, return_address= []):
     #if len(inp) > 0:
-    value =  inp.pop(0)
+    value =  int(inp.pop(0))
     key = stack.pop()
     heap[key] = value
+
 
 input_output_dict = {
     'ss': stack_output_char
@@ -39,7 +40,7 @@ input_output_dict = {
 }
 
 
-def input_output_flow(code_reader, stack, heap, input, output):
+def input_output_flow(code_reader, stack, heap, input, output, labels = {}, return_address= []):
     control_value = code_reader.next()
     if not input_output_dict.has_key(control_value):
         control_value += code_reader.next()

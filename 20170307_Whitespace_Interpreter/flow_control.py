@@ -10,16 +10,41 @@ from code_reader import *
 # [tab][line-feed]: Exit a subroutine and return control to the location from which the subroutine was called.
 # [line-feed][line-feed]: Exit the program.
 
-def flow_control_exit(code_reader, stack, heap, input, output):
+def flow_control_exit(code_reader, stack, heap, input, output, labels, return_address):
     for c in code_reader:
         pass
 
-flow_control_dict = {
-  'nn': flow_control_exit
-}
 
-def flow_control_flow(code_reader, stack, heap, input, output):
-    control_value = code_reader.next()
-    if not flow_control_dict.has_key(control_value):
-        control_value += code_reader.next()
-    (flow_control_dict[control_value])(code_reader, stack, heap, input, output)
+def flow_control_mark_label(code_reader, stack, heap, input, output, labels, return_address):
+    label = read_until_terminal(code_reader)
+    position = code_reader.position()
+    labels[label] = position
+
+def flow_control_call_subroutine(code_reader, stack, heap, input, output, labels, return_address):
+    label = read_until_terminal(code_reader)
+    return_address.append(code_reader.position())
+    code_reader.move(labels[label])
+
+def flow_control_jump_unconditionally(code_reader, stack, heap, input, output, labels, return_address):
+    label = read_until_terminal(code_reader)
+    code_reader.move(labels[label])
+
+def flow_control_jump_if_zero_stack(code_reader, stack, heap, input, output, labels, return_address):
+    label = read_until_terminal(code_reader)
+    if stack.pop() == 0:
+        code_reader.move(labels[label])
+
+def flow_control_jump_if_less_zero_stack(code_reader, stack, heap, input, output, labels, return_address):
+    label = read_until_terminal(code_reader)
+    if stack.pop() < 0:
+        code_reader.move(labels[label])
+
+def flow_control_exit_subroutine(code_reader, stack, heap, input, output, labels, return_address):
+    position = return_address.pop()
+    code_reader.move(position)
+#
+# def flow_control_flow(code_reader, stack, heap, input, output, labels, return_address):
+#     control_value = code_reader.next()
+#     if not flow_control_dict.has_key(control_value):
+#         control_value += code_reader.next()
+#     (flow_control_dict[control_value])(code_reader, stack, heap, input, output, labels, return_address)

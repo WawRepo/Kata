@@ -64,7 +64,7 @@ class TestInputOutput(TestCase):
         code_rdr = code_reader(code)
         stack = [97]
         heap = {}
-        inp = [97]
+        inp = "97".split("\n")
         output = []
 
         expected_stack = []
@@ -110,11 +110,11 @@ class TestInputOutput(TestCase):
         code_rdr = code_reader(code)
         stack = [97]
         heap = {}
-        inp = [97]
+        inp = ['ab']
         output = []
 
         expected_stack = []
-        expected_heap = {97: "a"}
+        expected_heap = {97: 97}
         input_output_flow(code_rdr, stack, heap, inp, output)
         self.assertEquals(heap, expected_heap)
         self.assertEquals(stack, expected_stack)
@@ -125,7 +125,7 @@ class TestInputOutput(TestCase):
         code_rdr = code_reader(code)
         stack = [97]
         heap = {}
-        inp = [97]
+        inp = "97".split("\n")
         output = []
 
         expected_stack = []

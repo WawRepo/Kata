@@ -53,6 +53,14 @@ class TestInterpreter(TestCase):
         code = "   \t\n   \t \n   \t\t\n \t  \t\t\n\t\n \t\n\n\n"
         self.assertRaises(IndexError, lambda: whitespace(code))
 
-    def test_from_CW_(self):
+    def _test_from_CW_(self):
         code = "   \t\n\t\n\t    \t \n\t\n\t    \t\t\n\t\n\t    \t  \n\t\n\t    \t \t\n\t\n\t    \t \t\n\t\t\t   \t  \n\t\t\t   \t\t\n\t\t\t   \t \n\t\t\t   \t\n\t\t\t\t\n  \t\n  \t\n  \t\n  \t\n  \n\n\n"
         self.assertRaises(IndexError, lambda: whitespace(code,inp='12345'))
+
+    def test_get_labels(self):
+        code = 'nsstttnssstntnstnsssssnnnn'
+
+        expected_labels = {'ttt':7, 'sss': 23}
+
+        self.assertDictEqual(expected_labels, get_labels(code))
+
