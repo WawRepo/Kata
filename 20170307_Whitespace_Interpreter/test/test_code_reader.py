@@ -46,3 +46,11 @@ class TestCodeReader(TestCase):
 
         for c in code_rdr:
             print c
+
+    def test_close(self):
+        code = 'tnss'
+        code_rdr = code_reader(code)
+
+        self.assertFalse(code_rdr.is_closed())
+        code_rdr.close()
+        self.assertTrue(code_rdr.is_closed())

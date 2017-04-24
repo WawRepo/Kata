@@ -11,13 +11,15 @@ from code_reader import *
 # [line-feed][line-feed]: Exit the program.
 
 def flow_control_exit(code_reader, stack, heap, input, output, labels, return_address):
-    for c in code_reader:
-        pass
-
+    # for c in code_reader:
+    #     pass
+    code_reader.close()
 
 def flow_control_mark_label(code_reader, stack, heap, input, output, labels, return_address):
     label = read_until_terminal(code_reader)
     position = code_reader.position()
+    if labels.has_key(label):
+        raise KeyError("Label already exist")
     labels[label] = position
 
 def flow_control_call_subroutine(code_reader, stack, heap, input, output, labels, return_address):
@@ -28,6 +30,11 @@ def flow_control_call_subroutine(code_reader, stack, heap, input, output, labels
 def flow_control_jump_unconditionally(code_reader, stack, heap, input, output, labels, return_address):
     label = read_until_terminal(code_reader)
     code_reader.move(labels[label])
+
+# def flow_control_jump_unconditionally(code_reader, stack, heap, input, output, labels, return_address):
+#     label = read_until_terminal(code_reader)
+#     if labels.has_key(label):
+#         code_reader.move(labels[label])
 
 def flow_control_jump_if_zero_stack(code_reader, stack, heap, input, output, labels, return_address):
     label = read_until_terminal(code_reader)

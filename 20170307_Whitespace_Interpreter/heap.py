@@ -5,12 +5,12 @@ from code_reader import *
 # [space]: Pop a and b, then store a at heap address b.
 # [tab]: Pop a and then push the value at heap address a onto the stack.
 
-def stack_to_heap(code_reader, stack, heap ):
+def stack_to_heap(code_reader, stack, heap,  inp = [], output = [], labels = {}, return_address= []):
     #if len(stack) > 1:
     value, key = stack.pop(), stack.pop()
     heap[key] = value
 
-def heap_to_stack(code_reader, stack, heap ):
+def heap_to_stack(code_reader, stack, heap, inp = [], output = [], labels = {}, return_address= []):
     #if len(stack) > 0 and len(heap) > 0:
     address = stack.pop()
     stack.append(heap[address])

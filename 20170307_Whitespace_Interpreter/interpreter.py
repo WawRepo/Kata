@@ -33,15 +33,14 @@ def flow(dict, code_reader, stack, heap = {}, inp = [], output = [], labels = {}
     else:
         (dict[control_value])(code_reader, stack, heap, inp, output, labels, return_address)
 
+def do_nothing(code_reader, stack=[], heap={}, inp=[], output=[], labels={}, return_address=[]):
+    pass
+
+def parse_label_only(code_rdr, stack=[], heap={}, inp=[], output=[], labels={}, return_address=[]):
+    code_reader.read_until_terminal(code_rdr)
 
 
 def get_labels(code):
-    def do_nothing(code_reader, stack=[], heap={}, inp=[], output=[], labels={}, return_address=[]):
-        pass
-
-    def parse_label_only(code_rdr, stack=[], heap={}, inp=[], output=[], labels={}, return_address=[]):
-        code_reader.read_until_terminal(code_rdr)
-
     input_output_dict = {
         'ss': do_nothing
         , 'st': do_nothing
@@ -72,7 +71,7 @@ def get_labels(code):
     }
 
     flow_control_dict = {
-        'nn': flow_control.flow_control_exit
+        'nn': do_nothing
         , 'ss': flow_control.flow_control_mark_label
         , 'st': parse_label_only
         , 'sn': parse_label_only
@@ -154,7 +153,8 @@ def whitespace(code, inp=''):
 
     flow_control_dict = {
         'nn': flow_control.flow_control_exit
-        , 'ss': flow_control.flow_control_mark_label
+        #, 'ss': flow_control.flow_control_mark_label
+        , 'ss': parse_label_only
         , 'st': flow_control.flow_control_call_subroutine
         , 'sn': flow_control.flow_control_jump_unconditionally
         , 'ts': flow_control.flow_control_jump_if_zero_stack
@@ -176,6 +176,13 @@ def whitespace(code, inp=''):
             flow(imp_dict,code_rdr, stack, heap, inp, output, labels, return_address)
     except StopIteration:
         pass
+
+
+
+    if not code_rdr.is_closed():
+        raise KeyError("Improper ending")
+    elif len(return_address) > 0:
+        raise KeyError("Return addresses not empty")
 
     return "".join([str(c) for c in output])
 

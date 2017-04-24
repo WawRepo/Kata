@@ -17,13 +17,14 @@ class code_reader:
     def __init__(self, code):
         self._code = code
         self._position = 0
+        self._closed = False
 
     def __iter__(self):
         return self
 
     def next(self):
         pos = self._position
-        if pos >= len(self._code):
+        if pos >= len(self._code) or self._closed:
             raise StopIteration
         self._position += 1
         return self._code[pos]
@@ -36,6 +37,11 @@ class code_reader:
             raise IndexError("Index out of bounds")
         self._position = i
 
+    def is_closed(self):
+        return self._closed
+
+    def close(self):
+        self._closed = True
 
 def read_until_terminal(code_reader):
     output_str = ''

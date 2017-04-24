@@ -47,6 +47,19 @@ class TestFlowControl(TestCase):
 
         self.assertDictEqual(expected_labels, labels)
 
+    def test_same_lanel_error(self):
+        code = 'ststn'
+        code_rdr = code_reader(code)
+        stack = [97]
+        heap = {}
+        inp = ""
+        output = []
+        labels = {'stst': 5}
+        return_address = []
+
+        self.assertRaises(KeyError, lambda: flow_control_mark_label(code_rdr, stack, heap, inp, output, labels, return_address))
+
+
     def test_call_subroutine(self):
         code = 'ststnstst'
         code_rdr = code_reader(code)

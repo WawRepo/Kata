@@ -53,14 +53,20 @@ class TestInterpreter(TestCase):
         code = "   \t\n   \t \n   \t\t\n \t  \t\t\n\t\n \t\n\n\n"
         self.assertRaises(IndexError, lambda: whitespace(code))
 
-    def _test_from_CW_(self):
-        code = "   \t\n\t\n\t    \t \n\t\n\t    \t\t\n\t\n\t    \t  \n\t\n\t    \t \t\n\t\n\t    \t \t\n\t\t\t   \t  \n\t\t\t   \t\t\n\t\t\t   \t \n\t\t\t   \t\n\t\t\t\t\n  \t\n  \t\n  \t\n  \t\n  \n\n\n"
-        self.assertRaises(IndexError, lambda: whitespace(code,inp='12345'))
 
     def test_get_labels(self):
         code = 'nsstttnssstntnstnsssssnnnn'
-
         expected_labels = {'ttt':7, 'sss': 23}
-
         self.assertDictEqual(expected_labels, get_labels(code))
 
+    def _test_from_CW_no_label_to_jump_fail(self):
+        code = "   \t\n   \t \n   \t\t\n\t\n \t\n \n  \t\n\t\n \t\t\n \t\n  \n \n\t"
+        self.assertRaises(IndexError, lambda: whitespace(code))
+
+    def _test_from_CW_exception_from_unknown_label(self):
+        code = "   \t\n\t\n \t\n \n \n   \t\n\t\n \t\n\n\n"
+        self.assertRaises(KeyError, lambda: whitespace(code))
+
+    def _test_from_CW_exception_subroutine_not_exit(self):
+        code = "   \t\n\t\n \t\n \t\n\n  \n   \t \n\t\n \t"
+        self.assertRaises(KeyError, lambda: whitespace(code))
